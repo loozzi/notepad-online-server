@@ -10,7 +10,7 @@ const app = express();
 const PORT = 3000;
 
 // enable cors
-var allowlist = ['http://192.168.1.2:8080/', 'http://localhost:8080/']
+var allowlist = ['http://192.168.1.2', 'http://localhost']
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
