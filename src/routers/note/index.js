@@ -21,7 +21,16 @@ router.get('/', middleware.checkLogin, (req, res, next) => {
         .then(data => {
             res.json({
                 success: true,
-                data: data
+                data: data.map(e => {
+                    return {
+                  title: e.title,
+                  body: e.body,
+                  permalink: e.permalink,
+                  tags: e.tags,
+                  time_create: e.time_create,
+                    view: e.view
+                  }
+                })
             })
         })
         .catch(error => {
