@@ -2,7 +2,7 @@ const UserModel = require('../models/User.js');
 const jwt = require('../jwt.js');
 
 function checkLogin(req, res, next) {
-    const token = req.cookies.token;
+    const token = req.params.token;
     try {
         const dataToken = jwt.decodeToken(token);
         UserModel.findById(dataToken.id)
