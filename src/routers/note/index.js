@@ -79,12 +79,16 @@ router.post('/', middleware.checkLogin, (req, res, next) => {
     }
 
     NoteModel.create(data);
+    UserModel.findByIdAndUpdate(res.data._id, {
+        note_count: note_count + 1
+    })
     res.json({
         success: true,
         data: {
             permalink: permalink
         }
     });
+
 });
 
 router.put('/:permalink', middleware.checkLogin, (req, res, next) => {
