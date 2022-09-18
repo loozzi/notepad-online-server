@@ -28,7 +28,8 @@ router.get('/', middleware.checkLogin, (req, res, next) => {
                   permalink: e.permalink,
                   tags: e.tags,
                   time_create: e.time_create,
-                    view: e.view
+                  view: e.view,
+                  lock: (e.password.length != 0)
                   }
                 })
             })
