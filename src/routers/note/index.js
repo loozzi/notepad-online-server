@@ -96,7 +96,8 @@ router.post('/', middleware.checkLogin, (req, res, next) => {
         permalink: permalink,
         tags: req.body.tags.split(',').map(e => e.trim()),
         password: password,
-        user_id: res.data._id
+        user_id: res.data._id,
+        time_create: req.body.time_create
     }
 
     NoteModel.create(data);
