@@ -44,7 +44,7 @@ app.use('/note', routerNote);
 
 // default router
 app.use((err, req, res, next) => {
-    res.json({
+    res.status(400).json({
         success: false,
         logs: err
     })
