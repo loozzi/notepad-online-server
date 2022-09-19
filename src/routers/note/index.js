@@ -7,6 +7,7 @@ const md5 = require('md5');
 // Import
 const middleware = require('../middleware.js');
 const NoteModel = require('../../models/Note.js');
+const UserModel = require('../../models/User.js');
 const extended = require('./extended.js');
 
 // Router
@@ -56,7 +57,17 @@ router.get('/all', middleware.checkLogin, (req, res, next) => {
             res.json({
                 success: true,
                 limit: limit * (page - 1) + data.length,
-                data: data
+                data: data.map(e => {
+                    return {
+                  title: e.title,
+                  body: e.body,
+                  permalink: e.permalink,
+                  tags: e.tags,
+                  time_create: e.time_create,
+                  view: e.view,
+                  lock: (e.password.length != 0)
+                  }
+                })
             });
         })
         .catch(error => {
@@ -89,9 +100,9 @@ router.post('/', middleware.checkLogin, (req, res, next) => {
     }
 
     NoteModel.create(data);
-    UserModel.findByIdAndUpdate(res.data._id, {
-        note_count: note_count + 1
-    })
+    UserModel.findByIdAndUpdate(res.data._id,{$inc: {
+        'note_count':  1
+    }});
     res.json({
         success: true,
         data: {
