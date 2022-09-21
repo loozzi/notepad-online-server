@@ -17,7 +17,16 @@ const PORT = 3000;
 //   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 //   next();
 // });
-const whiteList = ["http://192.168.1.2:8080", '*']
+const whiteList = [
+    "http://192.168.1.1:8080",
+    "http://192.168.1.2:8080", 
+    "http://192.168.1.3:8080", 
+    "http://192.168.1.4:8080", 
+    "http://192.168.1.5:8080",
+    "http://192.168.1.6:8080",
+    "http://192.168.1.7:8080",
+    "http://192.168.1.8:8080",
+    "http://192.168.1.9:8080",]
 app.use(cors({credentials: true, origin: whiteList}));
 
 
