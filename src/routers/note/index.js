@@ -145,7 +145,8 @@ router.delete('/:permalink', middleware.checkLogin, (req, res, next) => {
     } else {
         NoteModel.findOneAndDelete({
             permalink: req.params.permalink,
-            user_id: res.data._id
+            user_id: res.data._id,
+            password: md5(req.query.password)
         }).then(data => data);
         res.json({
             success: true
