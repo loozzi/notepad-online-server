@@ -12,8 +12,11 @@ const extended = require('./extended.js');
 
 // Router
 router.get('/', middleware.checkLogin, (req, res, next) => {
-    const num = Number.parseInt(req.query.limit);
-
+    let num = Number.parseInt(req.query.limit);
+    if(num >= 5)
+        num = 5;
+    else if(num <= 3)
+        num = 3;
     NoteModel.find({ user_id: res.data._id })
         .then(data => {
             return data.sort((x, y) => y.time_create - x.time_create).splice(0, num);
