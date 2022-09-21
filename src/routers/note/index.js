@@ -143,14 +143,34 @@ router.delete('/:permalink', middleware.checkLogin, (req, res, next) => {
             success: true
         });
     } else {
+        let password = ""
+        if(req.query.password.length > 0)
+            password = md5(req.query.password);
         NoteModel.findOneAndDelete({
             permalink: req.params.permalink,
             user_id: res.data._id,
-            password: md5(req.query.password)
-        }).then(data => data);
-        res.json({
-            success: true
+            password: password
+        }).then(data => {
+            data
         });
+        setTimeout(() => {
+            NoteModel.findOne({
+                permalink: req.params.permalink
+            })
+            .then(data => {
+                if(data == null){
+                    res.json({
+                        success: true,
+                    });
+                }
+                else {
+                    res.json({
+                        success: false,
+                        logs: 'Can not delete note.'
+                    });
+                }
+            });
+        }, 1000)
     }
 });
 
