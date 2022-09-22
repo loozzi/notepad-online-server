@@ -94,18 +94,25 @@ router.post('/:method', (req, res, next) => {
 });
 
 router.put('/', middleware.checkLogin, (req, res, next) => {
-    UserModel.findByIdAndUpdate(res.data._id, {
-        email: req.body.email.trim(),
-        password: md5(req.body.password.trim())
+    UserModel.findOneAndUpdate({
+        _id:res.data._id,
+        password: md5(req.body.password)
+
+    }, {
+        password: md5(req.body.new_password.trim())
     }).then(data => {
         if (data) {
             res.json({
-                success: true
+                success: true,
+                data: {
+                    username: data.username,
+                    email: data.email,
+                }
             });
         } else {
             res.status(400).json({
                 success: false,
-                logs: 'Cannot edit user'
+                logs: 'Wrong password'
             })
         }
     })
