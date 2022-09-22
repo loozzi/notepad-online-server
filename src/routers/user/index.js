@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const UserModel = require('../../models/User.js');
 const jwt = require('../../jwt.js');
+const md5 = require('md5');
 
 // Init value
 const page_limit = 10;
@@ -93,21 +94,27 @@ router.post('/:method', (req, res, next) => {
 });
 
 router.put('/', middleware.checkLogin, (req, res, next) => {
-    if (req.query.change == 'password') {
-        extended.changePassword(req, res, next);
-    }
-    else if (req.query.change == 'avatar') {
-        extended.changeAvatar(req, res, next);
-    }
-    else if (req.query.change == 'email') {
-        extended.changeEmail(req, res, next);
-    }
-    else {
-        res.status(400).json({
-            success: false,
-            logs: 'Cannot find method'
+    UserModel.findByIdAndUpdate(res.data._id, {
+        email: req.body.email.trim(),
+        password: md5(req.body.password.trim())
+    }).then(data => {
+        if (data) {
+            res.json({
+                success: true
+            });
+        } else {
+            res.status(400).json({
+                success: false,
+                logs: 'Cannot edit user'
+            })
+        }
+    })
+        .catch(error => {
+            res.status(400).json({
+                success: false,
+                logs: 'Error when edit user'
+            })
         })
-    }
 });
 
 router.delete('/:id', middleware.checkLogin, middleware.checkAdmin, (req, res, next) => {
