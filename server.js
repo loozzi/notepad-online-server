@@ -26,7 +26,9 @@ const whiteList = [
     "http://192.168.1.6:8080",
     "http://192.168.1.7:8080",
     "http://192.168.1.8:8080",
-    "http://192.168.1.9:8080",]
+    "http://192.168.1.9:8080",
+    '35.198.196.16'
+    ]
 app.use(cors({credentials: true, origin: whiteList}));
 
 
