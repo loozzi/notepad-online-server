@@ -23,16 +23,12 @@ router.get('/', middleware.checkLogin, (req, res, next) => {
 
         })
         .then(data => {
-            let body = e.body;
-            if(e.password.length != 0){
-                body = "Content is locked!"
-            }
             res.json({
                 success: true,
                 data: data.map(e => {
                     return {
                   title: e.title,
-                  body: body,
+                  body: (e.password.length != 0)?"Content is locked!":e.body,
                   permalink: e.permalink,
                   tags: e.tags,
                   time_create: e.time_create,
