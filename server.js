@@ -28,7 +28,8 @@ const whiteList = [
     "http://192.168.1.8:8080",
     "http://192.168.1.9:8080",
     '35.198.196.16',
-    'https://lighthearted-eclair-46e15c.netlify.app'
+    'https://lighthearted-eclair-46e15c.netlify.app',
+    'https://loozzi.dev/'
     ]
 app.use(cors({credentials: true, origin: whiteList}));
 
